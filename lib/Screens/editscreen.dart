@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:local_storage/Database/dbhelper.dart';
 
 class UpdateScreen extends StatefulWidget {
   Map<String ,dynamic> singleRecord={};
@@ -56,7 +57,20 @@ children: [
             ),
             ),
             SizedBox(height: 20,),
-            ElevatedButton(onPressed: (){},
+            ElevatedButton(onPressed: () async{
+       String name=nameController.text;
+       String number=phoneController.text;
+       String email=emailController.text;
+       int id=singleRecord['ID'];
+       int roweffect= await  DBHelper.instance.rowupdate(id, name, number, email);
+       if(roweffect>0){
+        await ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Data Updated Successfully'))
+                );
+                Navigator.pop(context);
+               }
+       
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blueGrey
             ), 

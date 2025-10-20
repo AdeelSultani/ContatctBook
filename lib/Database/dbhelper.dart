@@ -58,6 +58,18 @@ Future<int> insertRaw(String name,String number,String ?image,String ?email)
     Database db=await database;
     String query='Delete from Contact where ID=${id} ';
     return await db.rawDelete(query);
-
   }
+Future<int> rowupdate(int id, String name, String number, String? email) async {
+  Database db = await database;
+  return await db.update(
+    'Contact',
+    {'name': name, 'number': number, 'email': email},
+    where: 'id = ?',
+    whereArgs: [id],
+  );
 }
+  
+}
+
+
+  
